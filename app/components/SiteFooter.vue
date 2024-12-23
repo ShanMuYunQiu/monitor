@@ -25,8 +25,8 @@
         接口 | 检测频率 5 分钟
       </n-p>
       <n-p depth="3">
-        Copyright &copy; 2020 - {{ new Date().getFullYear() }}
-        <n-text depth="3" @click="jumpLink(linkData.home)"> IMSYY </n-text>
+        Copyright &copy; 2024 - {{ new Date().getFullYear() }}
+        <n-text depth="3" @click="jumpLink(linkData.home)"> 山暮云秋 </n-text>
         <n-text v-if="siteIcp" depth="3" @click="jumpLink('https://beian.miit.gov.cn/')">
           | {{ siteIcp }}
         </n-text>
