@@ -19,11 +19,7 @@ const siteConfig = {
 };
 
 export default defineNuxtConfig({
-  ssr: false,
-  compatibilityDate: "2024-11-11",
-  future: { compatibilityVersion: 4 },
-  devtools: { enabled: true },
-  devServer: { port: 8566 },
+  // modules
   modules: [
     "@pinia/nuxt",
     "pinia-plugin-persistedstate",
@@ -34,19 +30,12 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@vueuse/nuxt",
     "nuxt-lodash",
-    // platform
-    siteConfig.platform === "cloudflare" ? "@nuxthub/core" : "",
-  ],
-  // css
-  css: ["~/style/main.scss", "~/style/animate.scss"],
-  // env
-  runtimeConfig: {
-    apiUrl: process.env.API_URL || "https://api.uptimerobot.com/v2/",
-    apiKey: process.env.API_KEY,
-    sitePassword: process.env.SITE_PASSWORD,
-    siteSecretKey: process.env.SITE_SECRE_KEY || "site-status",
-    public: siteConfig,
-  },
+    "@nuxtjs/i18n",
+  ].concat(siteConfig.platform === "cloudflare" ? "@nuxthub/core" : ""),
+  // ssr
+  ssr: false,
+  // devtools
+  devtools: { enabled: true },
   // app
   app: {
     rootAttrs: { id: "nuxt-app" },
@@ -75,12 +64,12 @@ export default defineNuxtConfig({
         { rel: "icon", href: siteConfig.siteLogo },
         {
           rel: "apple-touch-icon",
-          href: "/images/icons/apple-touch-icon-180x180.png",
+          href: "/images/icons/normal/apple-touch-icon-180x180.png",
           sizes: "180x180",
         },
         {
           rel: "mask-icon",
-          href: "/images/icons/maskable-icon-512x512.png",
+          href: "/images/icons/normal/maskable-icon-512x512.png",
           color: "#ffffff",
         },
         // manifest
@@ -96,13 +85,31 @@ export default defineNuxtConfig({
       },
     },
   },
+  // css
+  css: ["~/style/main.scss", "~/style/animate.scss"],
+  // env
+  runtimeConfig: {
+    apiUrl: process.env.API_URL || "https://api.uptimerobot.com/v2/",
+    apiKey: process.env.API_KEY,
+    sitePassword: process.env.SITE_PASSWORD,
+    siteSecretKey: process.env.SITE_SECRE_KEY || "site-status",
+    public: siteConfig,
+  },
+  devServer: { port: 8566 },
+  future: { compatibilityVersion: 4 },
+  compatibilityDate: "2024-11-11",
   // vite
   vite: {
     plugins: [
       AutoImport({
         imports: [
           {
-            "naive-ui": ["useDialog", "useMessage", "useNotification", "useLoadingBar"],
+            "naive-ui": [
+              "useDialog",
+              "useMessage",
+              "useNotification",
+              "useLoadingBar",
+            ],
           },
         ],
       }),
@@ -118,37 +125,18 @@ export default defineNuxtConfig({
       },
     },
   },
-  // pwa
-  pwa: {
-    manifest: {
-      name: siteConfig.siteTitle,
-      short_name: siteConfig.siteDescription,
-      description: siteConfig.siteDescription,
-      theme_color: "#ffffff",
-      icons: [
-        {
-          src: "/images/icons/pwa-64x64.png",
-          sizes: "64x64",
-          type: "image/png",
-        },
-        {
-          src: "/images/icons/pwa-192x192.png",
-          sizes: "192x192",
-          type: "image/png",
-        },
-        {
-          src: "/images/icons/pwa-512x512.png",
-          sizes: "512x512",
-          type: "image/png",
-        },
-        {
-          src: "/images/icons/maskable-icon-512x512.png",
-          sizes: "512x512",
-          type: "image/png",
-          purpose: "maskable",
-        },
-      ],
+  // https://eslint.nuxt.com
+  eslint: {
+    config: {
+      stylistic: {
+        quotes: "double",
+        semi: true,
+      },
     },
+  },
+  // i18n
+  i18n: {
+    vueI18n: "./lang/i18n.config.ts",
   },
   // icon
   icon: {
@@ -161,13 +149,36 @@ export default defineNuxtConfig({
       },
     ],
   },
-  // https://eslint.nuxt.com
-  eslint: {
-    config: {
-      stylistic: {
-        quotes: "double",
-        semi: true,
-      },
+  // pwa
+  pwa: {
+    manifest: {
+      name: siteConfig.siteTitle,
+      short_name: siteConfig.siteDescription,
+      description: siteConfig.siteDescription,
+      theme_color: "#ffffff",
+      icons: [
+        {
+          src: "/images/icons/normal/pwa-64x64.png",
+          sizes: "64x64",
+          type: "image/png",
+        },
+        {
+          src: "/images/icons/normal/pwa-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          src: "/images/icons/normal/pwa-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+        },
+        {
+          src: "/images/icons/normal/maskable-icon-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "maskable",
+        },
+      ],
     },
   },
 });
